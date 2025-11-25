@@ -35,6 +35,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -54,13 +55,20 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-//private val rotation = FloatPropKey()
-
-
 @Composable
 fun DragAndDropBoxes(modifier: Modifier = Modifier) {
     var isPlaying by remember { mutableStateOf(true) }
     Column(modifier = Modifier.fillMaxSize()) {
+
+        // todo 8, this is where I added a button to reset the rect to the center of the screen
+        Button(
+            onClick = {
+                isPlaying = false
+            },
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text("Reset")
+        }
 
         Row(
             modifier = modifier
@@ -142,7 +150,6 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
 
         val rtatView by animateFloatAsState(
             targetValue = if (isPlaying) 360f else 0.0f,
-            // Configure the animation duration and easing.
             animationSpec = repeatable(
                 iterations = if (isPlaying) 10 else 1,
                 tween(durationMillis = 3000, easing = LinearEasing),
@@ -162,10 +169,9 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
                     .padding(10.dp)
                     .offset(pOffset.x.dp, pOffset.y.dp)
                     .rotate(rtatView)
-                    .size(80.dp, 40.dp)  // width, height - makes it rectangular
+                    .size(80.dp, 40.dp)
                     .background(Color.Blue)
             )
         }
     }
 }
-
