@@ -3,6 +3,7 @@
 package edu.farmingdale.draganddropanim_demo
 
 import android.content.ClipData
+import androidx.compose.foundation.layout.size
 import android.content.ClipDescription
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearEasing
@@ -152,13 +153,13 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
                 .weight(0.8f)
                 .background(Color.Red)
         ) {
-            Icon(
-                imageVector = Icons.Default.Face,
-                contentDescription = "Face",
+            Box(
                 modifier = Modifier
                     .padding(10.dp)
                     .offset(pOffset.x.dp, pOffset.y.dp)
                     .rotate(rtatView)
+                    .size(80.dp, 40.dp)  // width, height - makes it rectangular
+                    .background(Color.Blue)
             )
         }
     }
