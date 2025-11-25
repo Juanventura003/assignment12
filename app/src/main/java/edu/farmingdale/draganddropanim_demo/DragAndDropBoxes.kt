@@ -5,6 +5,7 @@ package edu.farmingdale.draganddropanim_demo
 import android.content.ClipData
 import androidx.compose.foundation.layout.size
 import android.content.ClipDescription
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -101,11 +102,12 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
                         enter = scaleIn() + fadeIn(),
                         exit = scaleOut() + fadeOut()
                     ) {
-                        Text(
-                            text = "Right",
-                            fontSize = 40.sp,
-                            color = Color.Red,
-                            fontWeight = FontWeight.Bold,
+
+                        // todo 4 this is where I changed the text to an icon which replicated the right text.
+                        Icon(
+                            imageVector = Icons.Default.ArrowForward,
+                            contentDescription = "Right",
+                            tint = Color.Red,
 
                             modifier = Modifier
                                 .fillMaxSize()
@@ -153,6 +155,8 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
                 .weight(0.8f)
                 .background(Color.Red)
         ) {
+
+            // todo 3, this is where I changed it from round to rectangle
             Box(
                 modifier = Modifier
                     .padding(10.dp)
