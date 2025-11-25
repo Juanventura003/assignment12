@@ -58,6 +58,8 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun DragAndDropBoxes(modifier: Modifier = Modifier) {
     var isPlaying by remember { mutableStateOf(true) }
+    var dragBoxIndex by remember { mutableIntStateOf(0) }
+
     Column(modifier = Modifier.fillMaxSize()) {
 
         // todo 8, this is where I added a button to reset the rect to the center of the screen
@@ -76,9 +78,6 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
                 .weight(0.2f)
         ) {
             val boxCount = 4
-            var dragBoxIndex by remember {
-                mutableIntStateOf(0)
-            }
 
             repeat(boxCount) { index ->
                 Box(
@@ -95,9 +94,10 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
                             },
                             target = remember {
                                 object : DragAndDropTarget {
+                                    // todo 9, this is where I enabled different animations based on which box was dropped
                                     override fun onDrop(event: DragAndDropEvent): Boolean {
-                                        isPlaying = !isPlaying
                                         dragBoxIndex = index
+                                        isPlaying = true
                                         return true
                                     }
                                 }
@@ -111,7 +111,7 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
                         exit = scaleOut() + fadeOut()
                     ) {
 
-                        // todo 4 this is where I changed the text to an icon which replicated the right text.
+                        // todo 4, this is where I changed the text to an icon which replicated the right text
                         Icon(
                             imageVector = Icons.Default.ArrowForward,
                             contentDescription = "Right",
@@ -139,11 +139,14 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
             }
         }
 
-
+        // todo 9, this is where I changed the animation to move based on drop event
         val pOffset by animateIntOffsetAsState(
-            targetValue = when (isPlaying) {
-                true -> IntOffset(130, 300)
-                false -> IntOffset(130, 100)
+            targetValue = when (dragBoxIndex) {
+                0 -> IntOffset(130, 50)
+                1 -> IntOffset(130, 400)
+                2 -> IntOffset(50, 200)
+                3 -> IntOffset(300, 200)
+                else -> IntOffset(130, 200)
             },
             animationSpec = tween(3000, easing = LinearEasing)
         )
